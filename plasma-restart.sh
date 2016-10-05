@@ -1,4 +1,4 @@
 #!/bin/sh
-kquitapp plasmashell
+killall --exact plasmashell
 plasmashell
-kwin_x11 -replace
+
