@@ -1,4 +1,6 @@
 #!/bin/sh
 killall --exact plasmashell
-plasmashell
+kwin_x11 --replace
+kstart plasmashell
+
 
