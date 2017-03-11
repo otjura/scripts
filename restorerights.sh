@@ -1,9 +1,9 @@
 #!/bin/bash
 
-for i in * ; 
+for input in * ; 
 do
-    if [[ -d $i ]] ;
-    then chmod 755 "$i" ;
-    else chmod 664 "$i" ;
-    fi 
+  if [[ -d "$input" ]] ;
+    then chmod 755 "$input" ;
+    else chmod 664 "$input" ;
+  fi 
 done
