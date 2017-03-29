@@ -22,7 +22,7 @@
 (defpackage #:qlqs-info
   (:export #:*version*))
 
-(defvar qlqs-info:*version* "2015-01-28")
+(defvar qlqs-info:*version* "2017-03-29")
 
 (defpackage #:qlqs-impl
   (:use #:cl)
@@ -388,7 +388,7 @@
 (definterface open-connection (host port)
   (:implementation t
     (declare (ignorable host port))
-    (error "Sorry, quicklisp in implementation ~S is not supported yet."
+    (error "Sorry, Quicklisp in implementation ~S is not supported yet."
            (lisp-implementation-type)))
   (:implementation allegro
     (qlqs-allegro:make-socket :remote-host host
@@ -1655,7 +1655,7 @@ the indexes in the header accordingly."
           version))
 
 (defvar *help-message*
-  (format nil "~&~%  ==== quicklisp quickstart install help ====~%~%    ~
+  (format nil "~&~%  ==== QUICKLISP QUICKSTART INSTALL HELP ====~%~%    ~
                quicklisp-quickstart:install can take the following ~
                optional arguments:~%~%      ~
                  :path \"/path/to/installation/\"~%~%      ~
@@ -1666,17 +1666,17 @@ the indexes in the header accordingly."
                  :dist-version <version>~%~%"))
 
 (defvar *after-load-message*
-  (format nil "~&~%  ==== quicklisp quickstart ~A loaded ====~%~%    ~
-               To continue with installation, evaluate: (quicklisp-quickstart:install)~%~%    ~
-               For installation options, evaluate: (quicklisp-quickstart:help)~%~%"
+  (format nil "~&~%  ==== QUICKLISP QUICKSTART ~A LOADED ====~%~%    ~
+               To continue with installation, evaluate:  (quicklisp-quickstart:install)~%~%    ~
+               For other installation options, evaluate: (quicklisp-quickstart:help)~%~%"
           qlqs-info:*version*))
 
 (defvar *after-initial-setup-message*
   (with-output-to-string (*standard-output*)
-    (format t "~&~%  ==== quicklisp installed ====~%~%")
+    (format t "~&~%  ==== QUICKLISP INSTALLED ====~%~%")
+    (format t "    To load Quicklisp every time you start Lisp, evaluate: (ql:add-to-init-file)~%~%")
     (format t "    To load a system, use: (ql:quickload \"system-name\")~%~%")
     (format t "    To find systems, use: (ql:system-apropos \"term\")~%~%")
-    (format t "    To load Quicklisp every time you start Lisp, use: (ql:add-to-init-file)~%~%")
     (format t "    For more information, see http://www.quicklisp.org/beta/~%~%")))
 
 (defun initial-install (&key (client-url *client-info-url*) dist-url)
@@ -1735,7 +1735,7 @@ the indexes in the header accordingly."
           (return-from install (load setup-file))))))
   (if (find-package '#:ql)
       (progn
-        (write-line "!!! Quicklisp has already been set up. !!!")
+        (write-line "!!! Quicklisp has already been set up !!!")
         (write-string *after-initial-setup-message*)
         t)
       (call-with-quiet-compilation
