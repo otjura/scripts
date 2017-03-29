@@ -1,0 +1,25 @@
+Collection of scripts. YMMV.
+
+restorerights.sh
+- restoring backups from NTFS chmods everything 777, this undoes it
+
+restorerights-deep.sh
+- same as above but for all files recursively
+
+downloadsorter.sh
+- moves files from Downloads folder to right folders by filetype
+
+ffmpeg-mp3-ruttaaja.sh
+- because 320CBR makes no sense
+
+Get-Uptime.ps1
+- uptime like in Linux but for PowerShell
+
+install-quicklisp.sh
+- fetches and initiates install of latest Quicklisp
+
+quicklisp.lisp
+- improved Quicklisp Quickinstall
+
+yuan-eur-yuan.cpp
+- simple currency converter
