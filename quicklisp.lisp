@@ -22,7 +22,7 @@
 (defpackage #:qlqs-info
   (:export #:*version*))
 
-(defvar qlqs-info:*version* "2017-03-29")
+(defvar qlqs-info:*version* "2017-03-30")
 
 (defpackage #:qlqs-impl
   (:use #:cl)
@@ -74,7 +74,7 @@
   (:use #:cl)
   (:export #:unpack-tarball))
 
-(defpackage #:quicklisp-quickstart
+(defpackage #:ql-quickstart
   (:use #:cl #:qlqs-impl #:qlqs-impl-util #:qlqs-http #:qlqs-minitar)
   (:export #:install
            #:help
@@ -1566,7 +1566,7 @@ the indexes in the header accordingly."
 ;;; The actual bootstrapping work
 ;;;
 
-(in-package #:quicklisp-quickstart)
+(in-package #:ql-quickstart)
 
 (defvar *home*
   (merge-pathnames (make-pathname :directory '(:relative "quicklisp"))
@@ -1656,7 +1656,7 @@ the indexes in the header accordingly."
 
 (defvar *help-message*
   (format nil "~&~%  ==== QUICKLISP QUICKSTART INSTALL HELP ====~%~%    ~
-               quicklisp-quickstart:install can take the following ~
+               ql-quickstart:install can take the following ~
                optional arguments:~%~%      ~
                  :path \"/path/to/installation/\"~%~%      ~
                  :proxy \"http://your.proxy:port/\"~%~%      ~
@@ -1667,16 +1667,16 @@ the indexes in the header accordingly."
 
 (defvar *after-load-message*
   (format nil "~&~%  ==== QUICKLISP QUICKSTART ~A LOADED ====~%~%    ~
-               To continue with installation, evaluate:  (quicklisp-quickstart:install)~%~%    ~
-               For other installation options, evaluate: (quicklisp-quickstart:help)~%~%"
+               To continue with installation, evaluate:  (ql-quickstart:install)~%~%    ~
+               For other installation options, evaluate: (ql-quickstart:help)~%~%"
           qlqs-info:*version*))
 
 (defvar *after-initial-setup-message*
   (with-output-to-string (*standard-output*)
     (format t "~&~%  ==== QUICKLISP INSTALLED ====~%~%")
     (format t "    To load Quicklisp every time you start Lisp, evaluate: (ql:add-to-init-file)~%~%")
-    (format t "    To load a system, use: (ql:quickload \"system-name\")~%~%")
-    (format t "    To find systems, use: (ql:system-apropos \"term\")~%~%")
+    (format t "    To load a system, evaluate: (ql:quickload \"system-name\")~%~%")
+    (format t "    To find systems, evaluate: (ql:system-apropos \"term\")~%~%")
     (format t "    For more information, see http://www.quicklisp.org/beta/~%~%")))
 
 (defun initial-install (&key (client-url *client-info-url*) dist-url)
@@ -1698,8 +1698,8 @@ the indexes in the header accordingly."
     (finish-output)))
 
 (defun help ()
-  (write-string *help-message*)
-  t)
+  (write-string *help-message*) 
+  t) ;FIXME return of T unsightly
 
 (defun non-empty-file-namestring (pathname)
   (let ((string (file-namestring pathname)))
