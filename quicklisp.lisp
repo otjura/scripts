@@ -1,4 +1,3 @@
-;;;;
 ;;;; This is quicklisp.lisp, the quickstart file for Quicklisp. To use
 ;;;; it, start Lisp, then (load "quicklisp.lisp")
 ;;;;
@@ -22,7 +21,7 @@
 (defpackage #:qlqs-info
   (:export #:*version*))
 
-(defvar qlqs-info:*version* "2017-03-30")
+(defvar qlqs-info:*version* "2017-04-22R")
 
 (defpackage #:qlqs-impl
   (:use #:cl)
@@ -90,7 +89,6 @@
 ;;;
 ;;; Defining implementation-specific packages and functionality
 ;;;
-
 (in-package #:qlqs-impl)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -192,13 +190,10 @@
 
 
 ;;; Bootstrap implementations
-
 (defvar *implementation* nil)
 (defclass lisp () ())
 
-
 ;;; Allegro Common Lisp
-
 (define-implementation-package :allegro #:qlqs-allegro
   (:documentation
    "Allegro Common Lisp - http://www.franz.com/products/allegrocl/")
@@ -208,9 +203,7 @@
   (:reexport-from #:excl
                   #:read-vector))
 
-
 ;;; Armed Bear Common Lisp
-
 (define-implementation-package :abcl #:qlqs-abcl
   (:documentation
    "Armed Bear Common Lisp - http://common-lisp.net/project/armedbear/")
@@ -220,7 +213,6 @@
                   #:get-socket-stream))
 
 ;;; Clozure CL
-
 (define-implementation-package :ccl #:qlqs-ccl
   (:documentation
    "Clozure Common Lisp - http://www.clozure.com/clozurecl.html")
@@ -228,9 +220,7 @@
   (:reexport-from #:ccl
                   #:make-socket))
 
-
 ;;; CLASP
-
 (define-implementation-package :clasp #:qlqs-clasp
   (:documentation "CLASP - http://github.com/drmeister/clasp")
   (:class clasp)
@@ -244,9 +234,7 @@
                   #:socket-make-stream
                   #:inet-socket))
 
-
 ;;; GNU CLISP
-
 (define-implementation-package :clisp #:qlqs-clisp
   (:documentation "GNU CLISP - http://clisp.cons.org/")
   (:class clisp)
@@ -257,7 +245,6 @@
 
 
 ;;; CMUCL
-
 (define-implementation-package :cmu #:qlqs-cmucl
   (:documentation "CMU Common Lisp - http://www.cons.org/cmucl/")
   (:class cmucl)
@@ -267,12 +254,9 @@
                   #:make-fd-stream)
   (:reexport-from #:extensions
                   #:connect-to-inet-socket))
-
 (defvar qlqs-cmucl:*gc-verbose* nil)
 
-
 ;;; Scieneer CL
-
 (define-implementation-package :scl #:qlqs-scl
   (:documentation "Scieneer Common Lisp - http://www.scieneer.com/scl/")
   (:class scl)
@@ -282,7 +266,6 @@
                   #:connect-to-inet-socket))
 
 ;;; ECL
-
 (define-implementation-package :ecl #:qlqs-ecl
   (:documentation "ECL - http://ecls.sourceforge.net/")
   (:class ecl)
@@ -296,9 +279,7 @@
                   #:socket-make-stream
                   #:inet-socket))
 
-
 ;;; LispWorks
-
 (define-implementation-package :lispworks #:qlqs-lispworks
   (:documentation "LispWorks - http://www.lispworks.com/")
   (:class lispworks)
@@ -308,9 +289,7 @@
                   #:open-tcp-stream
                   #:get-host-entry))
 
-
 ;;; SBCL
-
 (define-implementation-package :sbcl #:qlqs-sbcl
   (:class sbcl)
   (:documentation
@@ -328,7 +307,6 @@
                   #:socket-make-stream))
 
 ;;; MKCL
-
 (define-implementation-package :mkcl #:qlqs-mkcl
   (:class mkcl)
   (:documentation
@@ -346,7 +324,6 @@
 ;;;
 ;;; Utility function
 ;;;
-
 (in-package #:qlqs-impl-util)
 
 (definterface call-with-quiet-compilation (fun)
@@ -374,7 +351,6 @@
 ;;;
 ;;; Low-level networking implementations
 ;;;
-
 (in-package #:qlqs-network)
 
 (definterface host-address (host)
@@ -504,9 +480,8 @@
 
 
 ;;;
-;;; A text progress bar
+;;; Text progress bar
 ;;;
-
 (in-package #:qlqs-progress)
 
 (defclass progress-bar ()
@@ -612,8 +587,6 @@
 (defun kb/sec (progress-bar)
   (/ (units-per-second progress-bar) 1024))
 
-
-
 (defparameter *uncertain-progress-chars* "?")
 
 (defclass uncertain-size-progress-bar (progress-bar)
@@ -660,13 +633,11 @@
       (make-instance 'progress-bar :total total)))
 
 ;;;
-;;; A simple HTTP client
+;;; HTTP client
 ;;;
-
 (in-package #:qlqs-http)
 
 ;;; Octet data
-
 (deftype octet ()
   '(unsigned-byte 8))
 
@@ -679,7 +650,6 @@
               :initial-contents octets))
 
 ;;; ASCII characters as integers
-
 (defun acode (char)
   (cond ((eql char :cr)
          13)
@@ -747,8 +717,7 @@
                         ,@body)))
                  cases))))
 
-;;; Pattern matching (for finding headers)
-
+;;; Pattern matching for finding headers
 (defclass matcher ()
   ((pattern
     :initarg :pattern
@@ -812,7 +781,6 @@
 ;;; certain number of octets or until one or more patterns are seen in
 ;;; the input. cbufs automatically refill themselves from a
 ;;; connection as needed.
-
 (defvar *cbuf-buffer-size* 8192)
 
 (define-condition end-of-data (error) ())
@@ -944,7 +912,6 @@
 
 
 ;;; Creating HTTP requests as octet buffers
-
 (defclass octet-sink ()
   ((storage
     :initarg :storage
@@ -1019,7 +986,6 @@
 
 
 ;;; HTTP headers
-
 (defclass header ()
   ((data
     :initarg :data
@@ -1229,7 +1195,6 @@ the indexes in the header accordingly."
 
 
 ;;; HTTP URL parsing
-
 (defclass url ()
   ((hostname
     :initarg :hostname
@@ -1340,8 +1305,7 @@ the indexes in the header accordingly."
                            (path url2))))
 
 
-;;; Requesting an URL and saving it to a file
-
+;;; Requesting URL and saving it to file
 (defparameter *maximum-redirects* 10)
 (defvar *default-url-defaults* (url "http://src.quicklisp.org/"))
 
@@ -1443,7 +1407,6 @@ the indexes in the header accordingly."
 
 
 ;;; A primitive tar unpacker
-
 (in-package #:qlqs-minitar)
 
 (defun make-block-buffer ()
@@ -1563,14 +1526,14 @@ the indexes in the header accordingly."
 
 
 ;;;
-;;; The actual bootstrapping work
+;;; Actual bootstrapping work
 ;;;
-
 (in-package #:ql-quickstart)
 
 (defvar *home*
-  (merge-pathnames (make-pathname :directory '(:relative "quicklisp"))
-                   (user-homedir-pathname)))
+  (merge-pathnames (make-pathname :directory '(:relative ".quicklisp"))
+                   (user-homedir-pathname))
+  "Default Quicklisp installation directory")
 
 (defun qmerge (pathname)
   (merge-pathnames pathname *home*))
@@ -1655,29 +1618,30 @@ the indexes in the header accordingly."
           version))
 
 (defvar *help-message*
-  (format nil "~&~%  ==== QUICKLISP QUICKSTART INSTALL HELP ====~%~%    ~
-               ql-quickstart:install can take the following ~
-               optional arguments:~%~%      ~
-                 :path \"/path/to/installation/\"~%~%      ~
-                 :proxy \"http://your.proxy:port/\"~%~%      ~
-                 :client-url <url>~%~%      ~
-                 :client-version <version>~%~%      ~
-                 :dist-url <url>~%~%      ~
+  (format nil "~&~%  ==== QUICKLISP QUICKSTART INSTALL HELP ====~%~% ~
+               (ql-quickstart:install) can take the following optional arguments:~%~% ~
+                 :path \"/path/to/installation/\"  [Default: $HOME/.quicklisp]~%~% ~
+                 :proxy \"http://your.proxy:port/\"~%~% ~
+                 :client-url <url>~%~% ~
+                 :client-version <version>~%~% ~
+                 :dist-url <url>~%~% ~
                  :dist-version <version>~%~%"))
 
 (defvar *after-load-message*
-  (format nil "~&~%  ==== QUICKLISP QUICKSTART ~A LOADED ====~%~%    ~
-               To continue with installation, evaluate:  (ql-quickstart:install)~%~%    ~
-               For other installation options, evaluate: (ql-quickstart:help)~%~%"
+  (format nil "~&~%  ==== QUICKLISP QUICKSTART ~A LOADED ====~%~% ~
+               To continue with installation:  (ql-quickstart:install)~%~% ~
+               For other installation options: (ql-quickstart:help)~%~%"
           qlqs-info:*version*))
 
 (defvar *after-initial-setup-message*
   (with-output-to-string (*standard-output*)
-    (format t "~&~%  ==== QUICKLISP INSTALLED ====~%~%")
-    (format t "    To load Quicklisp every time you start Lisp, evaluate: (ql:add-to-init-file)~%~%")
-    (format t "    To load a system, evaluate: (ql:quickload \"system-name\")~%~%")
-    (format t "    To find systems, evaluate: (ql:system-apropos \"term\")~%~%")
-    (format t "    For more information, see http://www.quicklisp.org/beta/~%~%")))
+    (format t "~&~%  ==== QUICKLISP INSTALLED TO ~A ====~%~%" *home*)
+    (format t "    Loading Quicklisp: (load ~S)~%~%" (qmerge "setup.lisp"))
+    (format t "    To load Quicklisp every time you start Lisp: (ql:add-to-init-file)~%~%")
+    (format t "    To find systems:  (ql:system-apropos \"term\")~%~%")
+    (format t "    To load a system: (ql:quickload \"system-name\")~%~%")
+    (format t "    For more information, visit http://www.quicklisp.org/beta/~%~%")
+    (format t "                  Happy hacking!~%~%")))
 
 (defun initial-install (&key (client-url *client-info-url*) dist-url)
   (setf *quickstart-parameters*
@@ -1744,14 +1708,15 @@ the indexes in the header accordingly."
                                (and client-version
                                     (client-info-url-from-version client-version))
                                *client-info-url*))
-               ;; It's ok for dist-url to be nil; there's a default in
-               ;; the client
+               ;; It's ok for dist-url to be nil, there's a default in the client
                (dist-url (or dist-url
                              (and dist-version
                                   (distinfo-url-from-version dist-version)))))
            (initial-install :client-url client-url
                             :dist-url dist-url))))))
 
+;;; Begin Quicklisp Quickstart
 (write-string *after-load-message*)
 
 ;;; End of quicklisp.lisp
+
